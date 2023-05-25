@@ -1,1 +1,1 @@
-simple_shell duo alx project
+alx simple_shell project repository

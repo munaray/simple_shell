@@ -1,106 +1,177 @@
-#ifndef SHELL_H
-#define SHELL_H
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _SHELL_H_
+#define _SHELL_H_
+
+#include <fcntl.h>
 #include <signal.h>
 #include <sys/types.h>
-#include <sys/wait.h>
-#include <stdbool.h>
-#include <string.h>
 #include <sys/stat.h>
-#include <limits.h>
-#include <fcntl.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <errno.h>
-#include <ctype.h>
+#include <stdio.h>
 
-#define BUFFER_SIZE 1024
-#define BUFFER_FLUSH -1
+#define END_OF_FILE -2
+#define EXIT -3
 
-/* 1 if using system getline() */
-#define USE_GETLINE 0
-#define USE_STRTOK 0
 
-/* for command chaining */
-#define CMD_NORM	0
-#define CMD_OR		1
-#define CMD_AND		2
-#define CMD_CHAIN	3
+/* Global program name */
+char *name;
+/* Global history counter */
+int hist;
 
 /**
- * struct liststr - singly linked list
- * @num: the number field
- * @str: a string
- * @next: points to the next node
+ * struct list_s - A new struct type defining a linked list.
+ * @dir: A directory path.
+ * @next: A pointer to another struct list_s.
  */
-typedef struct liststr
+typedef struct list_s
 {
-	int num;
-	char *str;
-	struct liststr *next;
+	char *dir;
+	struct list_s *next;
 } list_t;
 
 /**
- *struct passinfo - contains pseudo-arguements to pass into a function,
- *					allowing uniform prototype for function pointer struct
- *@arg: a string generated from getline containing arguements
- *@argv: an array of strings generated from arg
- *@path: a string path for the current command
- *@argc: the argument count
- *@line_count: the error count
- *@err_num: the error code for exit()s
- *@linecount_flag: if on count this line of input
- *@fname: the program filename
- *@env: linked list local copy of environ
- *@environ: custom modified copy of environ from LL env
- *@history: the history node
- *@alias: the alias node
- *@env_changed: on if environ was changed
- *@status: the return status of the last exec'd command
- *@cmd_buf: address of pointer to cmd_buf, on if chaining
- *@cmd_buf_type: CMD_type ||, &&, ;
- *@readfd: the fd from which to read line input
- *@histcount: the history line number count
+ * struct builtin_s - A new struct type defining builtin commands.
+ * @name: The name of the builtin command.
+ * @f: A function pointer to the builtin command's function.
  */
-typedef struct passinfo
+typedef struct builtin_s
 {
-	char *arg;
-	char **argv;
-	char *path;
-	int argc;
-	unsigned int line_count;
-	int err_num;
-	int linecount_flag;
-	char *fname;
-	list_t *env;
-	list_t *history;
-	list_t *alias;
-	char **environ;
-	int env_changed;
-	int status;
+	char *name;
+	int (*f)(char **argv, char **front);
+} builtin_t;
 
-	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
-	int cmd_buf_type; /* CMD_type ||, &&, ; */
-	int readfd;
-	int histcount;
-} info_t;
+/**
+ * struct alias_s - A new struct defining aliases.
+ * @name: The name of the alias.
+ * @value: The value of the alias.
+ * @next: A pointer to another struct alias_s.
+ */
+typedef struct alias_s
+{
+	char *name;
+	char *value;
+	struct alias_s *next;
+} alias_t;
 
-#define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-	0, 0, 0}
+/* Global aliases linked list */
+alias_t *aliases;
 
-int _putchar(char c);
-void _puts(char *str);
-ssize_t get_input(info_t *);
-int _getline(info_t *, char **, size_t *);
-void sigintHandler(int);
-char *_strncpy(char *dest, char *src, int n);
-char *_strncat(char *dest, char *src, int n);
-char *_strchr(char *s, char c);
-char **splitString(char *str, char d, int *numSubstrings);
-int linked(info_t *info, char *buf, size_t *p);
-void checkLink(info_t *info, char *buf, size_t *p, size_t i, size_t len);
-/* void writeString(int fd, const char *str);
-void readString(int fd, char *buffer, size_t size); */
+
+/* prototype for aliases.c */
+int handleAliasCmd(char **args, char __attribute__((__unused__)) **argStart);
+void updateAlias(char *name, char *value);
+void printAlias(alias_t *alias);
+char **printAliasValue(char **args);
+
+/* START BuiltinHelp Prototype*/
+/* envbuiltinhelp */
+void displayEnvHelp(void);
+void displaySetenvHelp(void);
+void displayUnsetenvHelp(void);
+/* otherbuiltinhelp.c */
+void displayAllHelp(void);
+void displayAliasHelp(void);
+void displayCdHelp(void);
+void displayExitHelp(void);
+void displayHelpMessage(void);
+/* END */
+
+/* builtinHandler.c */
+int (*handleBuiltin(char *command))(char **args, char **argStart);
+int exitShell(char **args, char **argStart);
+int cdShell(char **args, char __attribute__((__unused__)) **argStart);
+int helpShell(char **args, char __attribute__((__unused__)) **argStart);
+
+/* Envirometal variable builtinHandler.c */
+int envShell(char **args, char __attribute__((__unused__)) **argStart);
+int setenvShell(char **args, char __attribute__((__unused__)) **argStart);
+int unsetenvShell(char **args, char __attribute__((__unused__)) **argStart);
+
+/* environ.c */
+char **_copyenv(void);
+void freeEnv(void);
+char **_getenv(const char *var);
+char *envValueHandler(char *beginning, int len);
+extern char **environ;
+
+/* errorsHandler.c */
+int numLen(int num);
+char *_itoa(int num);
+int createError(char **args, int err);
+
+/* errormessages.c */
+char *errorEnv(char **args);
+char *error1(char **args);
+char *errorToExit(char **args);
+char *errorToCd(char **args);
+char *syntaxError(char **args);
+
+/* errormessages1.c */
+char *error126(char **args);
+char *error127(char **args);
+
+/* getline.c */
+void *_realloc(void *ptr, unsigned int oldSize, unsigned int newSize);
+void allocateLineptr(char **lineptr, size_t *lineptrSize, char *buffer, size_t bufferSize);
+ssize_t _getline(char **lineptr, size_t *lineptrSize, FILE *file);
+
+/* variableHandler.c */
+void replaceVariable(char **args, int *retLastExeCmd);
+
+/* getpid.c */
+char *getPid(void);
+int execute(char **args, char **argStart);
+
+/* logicalOperator.c */
+void handleLogicalOperator(char *line, ssize_t *newLen);
+
+/* lineHandler.c */
+void lineHandler(char **line, ssize_t read);
+ssize_t grabNewLen(char *line);
+
+/* arguments.c */
+int callArgs(char **args, char **argStart, int *retLastExeCmd);
+char *getArgs(char *line, int *retLastExeCmd);
+int checkArgs(char **args);
+int executeArgs(char **args, char **argStart, int *retLastExeCmd);
+int argsHandler(int *retLastExeCmd);
+
+/* stringfunctions.c */
+int _strlen(const char *s);
+char *_strcpy(char *dest, const char *src);
+char *_strcat(char *dest, const char *src);
+char *_strncat(char *dest, const char *src, size_t n);
+
+/* stringfunctions1.c */
+char *_strchr(char *str, char c);
+int _strspn(char *str, char *accept);
+int _strcmp(char *str1, char *str2);
+int _strncmp(const char *str1, const char *str2, size_t n);
+
+/* tokenizers.c */
+int tokenLength(char *str, char *delim);
+int tokensCounter(char *str, char *delim);
+char **_strtok(char *line, char *delim);
+
+/* otherfunctions.c */
+void handleSignal(int sig);
+void freeArgs(char **args, char **argStart);
+
+/* linkedlist.c */
+alias_t *addAliasEnd(alias_t **head, char *name, char *value);
+void freeAliasList(alias_t *head);
+list_t *addNodeEnd(list_t **head, char *dir);
+void freeList(list_t *head);
+
+/* cmdByPath.c */
+char *fillDirByPath(char *path);
+list_t *getDirByPath(char *path);
+char *handleCmdByPath(char *cmd);
+
+/* fileascmdarg.c */
+int failToOpen(char *filePath);
+int processCmdFromFile(char *filePath, int *retLastExeCmd);
 
 #endif
