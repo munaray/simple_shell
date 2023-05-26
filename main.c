@@ -6,11 +6,12 @@
  *@argv: This stands for argument vector.
  *Return: The return value of the last executed command.
  */
+
 int main(int argc, char *argv[])
 {
 	int ret = 0, retn;
 	int *retLastExeCmd = &retn;
-	char *prompt = "sam@munaray> ", *nl = "\n";
+	char *prompt = "$ ", *nl = "\n";
 
 	name = argv[0];
 	hist = 1;
@@ -41,7 +42,7 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-		write(STDOUT_FILENO, prompt, _strlen(prompt));
+		write(STDOUT_FILENO, prompt, 2);
 		ret = argsHandler(retLastExeCmd);
 		if (ret == END_OF_FILE || ret == EXIT)
 		{

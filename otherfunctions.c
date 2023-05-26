@@ -21,9 +21,9 @@ void freeArgs(char **args, char **argStart)
  */
 void handleSignal(int sig)
 {
-	char *newPrompt = "\nsam@munaray> ";
+	char *newPrompt = "\n$ ";
 
 	(void)sig;
 	signal(SIGINT, handleSignal);
-	write(STDIN_FILENO, newPrompt, _strlen(newPrompt));
+	write(STDIN_FILENO, newPrompt, 3);
 }
