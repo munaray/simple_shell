@@ -1,1 +1,1 @@
-alx simple_shell project repository
+Alx simple_shell project by Sam And Abdulsalam
