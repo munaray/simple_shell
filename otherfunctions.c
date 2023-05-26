@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * freeArgs - Frees up memory taken by args.
+ * freeArgs - This frees up memory taken by args.
  * @args: A null-terminated double pointer containing commands/arguments.
  * @argStart: A double pointer to the beginning of args.
  */
@@ -16,14 +16,14 @@ void freeArgs(char **args, char **argStart)
 }
 
 /**
- * handleSignal - Prints a new prompt upon a signal.
- * @sig: The signal.
+ * handleSignal - This prints a new prompt upon a signal.
+ * @sig: The signal to be handled.
  */
 void handleSignal(int sig)
 {
-	char *newPrompt = "\n$ ";
+	char *newPrompt = "\nsam@munaray> ";
 
 	(void)sig;
 	signal(SIGINT, handleSignal);
-	write(STDIN_FILENO, newPrompt, 3);
+	write(STDIN_FILENO, newPrompt, _strlen(newPrompt));
 }

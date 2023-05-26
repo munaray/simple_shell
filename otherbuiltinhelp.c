@@ -1,25 +1,25 @@
 #include "shell.h"
 
 /**
- * displayAllHelp - Displays all possible builtin shellby commands.
+ * displayAllHelp - Displays all possible builtin commands.
  */
 void displayAllHelp(void)
 {
-	char *output = "Shellby\nThese built-in commands are defined internally.\n";
+char *output = "Shellby\nThese built-in commands are defined internally.\n";
 
-    write(STDOUT_FILENO, output, _strlen(output));
-    output = "Type 'help' to view this list.\nType 'help command' to find ";
-    write(STDOUT_FILENO, output, _strlen(output));
-    output = "out more about the 'command'.\n\n  alias   \t";
-    write(STDOUT_FILENO, output, _strlen(output));
-    output = "alias [NAME[='VALUE'] ...]\n  navigate    \tnavigate ";
-    write(STDOUT_FILENO, output, _strlen(output));
-    output = "[DIRECTORY]\n  terminate    \tterminate [STATUS]\n  env     \tenv";
-    write(STDOUT_FILENO, output, _strlen(output));
-    output = "\n  setenv  \tsetenv [VARIABLE] [VALUE]\n  unsetenv\t";
-    write(STDOUT_FILENO, output, _strlen(output));
-    output = "unsetenv [VARIABLE]\n";
-    write(STDOUT_FILENO, output, _strlen(output));
+write(STDOUT_FILENO, output, _strlen(output));
+output = "Type 'help' to view this list.\nType 'help command' to find ";
+write(STDOUT_FILENO, output, _strlen(output));
+output = "out more about the 'command'.\n\n  alias   \t";
+write(STDOUT_FILENO, output, _strlen(output));
+output = "alias [NAME[='VALUE'] ...]\n  navigate    \tnavigate ";
+write(STDOUT_FILENO, output, _strlen(output));
+output = "[DIRECTORY]\n  terminate    \tterminate [STATUS]\n  env     \tenv";
+write(STDOUT_FILENO, output, _strlen(output));
+output = "\n  setenv  \tsetenv [VARIABLE] [VALUE]\n  unsetenv\t";
+write(STDOUT_FILENO, output, _strlen(output));
+output = "unsetenv [VARIABLE]\n";
+write(STDOUT_FILENO, output, _strlen(output));
 }
 
 /**
@@ -27,7 +27,7 @@ void displayAllHelp(void)
  */
 void displayAliasHelp(void)
 {
-	char *output = "alias: alias [NAME[='VALUE'] ...]\n\tManage command aliases.\n";
+	char *output = "alias: alias [NAME[='VALUE'] ...]\n\tManage aliases cmd.\n";
 
 	write(STDOUT_FILENO, output, _strlen(output));
 	output = "\n\talias: Prints a list of all defined aliases, one per line, ";
@@ -45,7 +45,7 @@ void displayAliasHelp(void)
 }
 
 /**
- * displayCdHelp - Displays information on the shellby builtin command 'cd'.
+ * displayCdHelp - Displays information on the builtin command 'cd'.
  */
 void displayCdHelp(void)
 {
@@ -65,11 +65,11 @@ void displayCdHelp(void)
 }
 
 /**
- * displayExitHelp - Displays information on the shellby builtin command 'exit'.
+ * displayExitHelp - Displays information on the builtin command 'exit'.
  */
 void displayExitHelp(void)
 {
-	char *output = "terminate: terminate [STATUS]\n\tTerminates the shell.\n\n\tThe ";
+	char *output = "terminate: terminate [STATUS]\n\tTerminates shell.\n\n\tThe ";
 
 	write(STDOUT_FILENO, output, _strlen(output));
 	output = "STATUS argument is the integer used to terminate the shell.";
@@ -82,14 +82,14 @@ void displayExitHelp(void)
 }
 
 /**
- * displayHelpMessage - Displays information on the shellby builtin command 'help'.
+ * displayHelpMessage - Displays information on the builtin command 'help'.
  */
 void displayHelpMessage(void)
 {
-	char *output = "Guide: help\n\tView all available Shellby built-in functions.\n";
-	write(STDOUT_FILENO, output, _strlen(output));
-    output = "\n      help [FUNCTION NAME]\n\tView specific details about each ";
-    write(STDOUT_FILENO, output, _strlen(output));
-    output = "built-in function.\n";
-    write(STDOUT_FILENO, output, _strlen(output));
+	char *output = "Guide: help\n\tView all available built-in functions.\n";
+write(STDOUT_FILENO, output, _strlen(output));
+output = "\nhelp [FUNCTION NAME]\n\tView specific details about each ";
+write(STDOUT_FILENO, output, _strlen(output));
+output = "built-in function.\n";
+write(STDOUT_FILENO, output, _strlen(output));
 }

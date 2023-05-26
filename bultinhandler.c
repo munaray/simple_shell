@@ -1,13 +1,12 @@
 #include "shell.h"
 
 /**
- * handleBuiltin - Matches a command with a corresponding
- *               shellby builtin function.
- * @command: The command to match.
- *
+ * handleBuiltin - This join a cmd with its corresponding
+ * builtin function.
+ * @cmd: The cmd to match.
  * Return: A function pointer to the corresponding builtin.
  */
-int (*handleBuiltin(char *command))(char **args, char **argStart)
+int (*handleBuiltin(char *cmd))(char **args, char **argStart)
 {
 	builtin_t funcs[] = {
 		{ "exit", exitShell },
@@ -23,23 +22,20 @@ int (*handleBuiltin(char *command))(char **args, char **argStart)
 
 	for (i = 0; funcs[i].name; i++)
 	{
-		if (_strcmp(funcs[i].name, command) == 0)
+		if (_strcmp(funcs[i].name, cmd) == 0)
 			break;
 	}
 	return (funcs[i].f);
 }
 
 /**
- * exitShell - Causes normal process termination
- *                for the shellby shell.
+ * exitShell - A function that exit the shell when invoke.
  * @args: An array of arguments containing the exit value.
  * @argStart: A double pointer to the beginning of args.
  *
- * Return: If there are no arguments - -3.
- *         If the given exit value is invalid - 2.
- *         O/w - exits with the given status value.
- *
- * Description: Upon returning -3, the program exits back in the main function.
+ * Return: if args is absent return -3.
+ *         for invalid exit status return 2.
+ *         else exits with the given status value.
  */
 int exitShell(char **args, char **argStart)
 {
@@ -75,13 +71,11 @@ int exitShell(char **args, char **argStart)
 }
 
 /**
- * cdShell - Changes the current directory of the shellby process.
+ * cdShell - This changes the current directory of the shell.
  * @args: An array of arguments.
  * @argStart: A double pointer to the beginning of args.
  *
- * Return: If the given string is not a directory - 2.
- *         If an error occurs - -1.
- *         Otherwise - 0.
+ * Return: on success return 0.
  */
 int cdShell(char **args, char __attribute__((__unused__)) **argStart)
 {
@@ -156,12 +150,11 @@ int cdShell(char **args, char __attribute__((__unused__)) **argStart)
 }
 
 /**
- * helpShell - Displays information about shellby builtin commands.
+ * helpShell - This displays information about the builtin cmds.
  * @args: An array of arguments.
  * @argStart: A pointer to the beginning of args.
  *
- * Return: If an error occurs - -1.
- *         Otherwise - 0.
+ * Return: on success return 0.
  */
 int helpShell(char **args, char __attribute__((__unused__)) **argStart)
 {

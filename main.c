@@ -1,17 +1,16 @@
 #include "shell.h"
 
 /**
- * main - Runs a simple UNIX command interpreter.
- * @argc: The number of arguments supplied to the program.
- * @argv: An array of pointers to the arguments.
- *
- * Return: The return value of the last executed command.
+ * main - This is the main loop shell for the UNIX shell.
+ * @argc: This stands for argument count.
+ *@argv: This stands for argument vector.
+ *Return: The return value of the last executed command.
  */
 int main(int argc, char *argv[])
 {
 	int ret = 0, retn;
 	int *retLastExeCmd = &retn;
-	char *prompt = "$ ", *nl = "\n";
+	char *prompt = "sam@munaray> ", *nl = "\n";
 
 	name = argv[0];
 	hist = 1;
@@ -42,7 +41,7 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-		write(STDOUT_FILENO, prompt, 2);
+		write(STDOUT_FILENO, prompt, _strlen(prompt));
 		ret = argsHandler(retLastExeCmd);
 		if (ret == END_OF_FILE || ret == EXIT)
 		{

@@ -1,13 +1,8 @@
 #include "shell.h"
 
 /**
- * getPid - Gets the current process ID.
- * Description: Opens the stat file, a space-delimited file containing
- *              information about the current process. The PID is the
- *              first word in the file. The function reads the PID into
- *              a buffer and replace the space at the end with a \0 byte.
- *
- * Return: The current process ID or NULL on failure.
+ * getPid - This gets the current process ID.
+ * Return: current pid on success else NULL.
  */
 char *getPid(void)
 {
@@ -37,12 +32,11 @@ char *getPid(void)
 }
 
 /**
- * execute - Executes a cmd in a child process.
+ * execute - This xecutes a cmd in a child process.
  * @args: An array of arguments.
  * @argStart: A double pointer to the beginning of args.
  *
- * Return: If an error occurs - a corresponding error code.
- *         O/w - The exit value of the last executed cmd.
+ * Return: the exit value of the last executed cmd on success.
  */
 int execute(char **args, char **argStart)
 {

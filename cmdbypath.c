@@ -1,11 +1,9 @@
 #include "shell.h"
 
 /**
- * handleCmdByPath - Locates a cmd in the PATH.
- * @cmd: The cmd to locate.
- *
- * Return: If an error occurs or the cmd cannot be located - NULL.
- *         Otherwise - the full pathname of the cmd.
+ * handleCmdByPath - This find the cmd by path.
+ * @cmd: This store the input cmd to locate.
+ * Return: on success return the full path name.
  */
 char *handleCmdByPath(char *cmd)
 {
@@ -46,8 +44,8 @@ char *handleCmdByPath(char *cmd)
 }
 
 /**
- * fillDirByPath - Copies path but also replaces leading/sandwiched/trailing
- *		   colons (:) with current working directory.
+ * fillDirByPath - This copies path but also replaces leading/
+ * sandwiched/trailing colons (:) with current working directory.
  * @path: The colon-separated list of directories.
  *
  * Return: A copy of path with any leading/sandwiched/trailing colons replaced
@@ -101,10 +99,9 @@ char *fillDirByPath(char *path)
 }
 
 /**
- * getDirByPath - Tokenizes a colon-separated list of
- *                directories into a list_s linked list.
+ * getDirByPath - This tokenizes a colon-separated list of
+ *                directories into a list_t linked list.
  * @path: The colon-separated list of directories.
- *
  * Return: A pointer to the initialized linked list.
  */
 list_t *getDirByPath(char *path)

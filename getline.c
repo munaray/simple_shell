@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _realloc - Reallocates a memory block using malloc and free.
+ * _realloc - This reallocates a memory block using malloc and free.
  * @ptr: A pointer to the memory previously allocated.
  * @oldSize: The size in bytes of the allocated space for ptr.
  * @newSize: The size in bytes for the new memory block.
@@ -52,13 +52,14 @@ void *_realloc(void *ptr, unsigned int oldSize, unsigned int newSize)
 }
 
 /**
- * allocateLineptr - Reassigns the lineptr variable for _getline.
+ * allocateLineptr - This reassigns the lineptr variable for _getline.
  * @lineptr: A buffer to store an input string.
  * @lineptrSize: The size of lineptr.
  * @buffer: The string to assign to lineptr.
  * @bufferSize: The size of buffer.
  */
-void allocateLineptr(char **lineptr, size_t *lineptrSize, char *buffer, size_t bufferSize)
+void allocateLineptr(char **lineptr, size_t *lineptrSize,
+char *buffer, size_t bufferSize)
 {
 	if (*lineptr == NULL)
 	{

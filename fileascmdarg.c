@@ -1,10 +1,9 @@
 #include "shell.h"
 
 /**
- * failToOpen - If the file doesn't exist or lacks proper permissions, print
- * a cant open error.
+ * failToOpen - If file doesn't exist or lacks proper permissions
+ * a cant open error is printed.
  * @filePath: Path to the supposed file.
- *
  * Return: 127.
  */
 
@@ -39,14 +38,13 @@ int failToOpen(char *filePath)
 }
 
 /**
- * processCmdFromFile - Takes a file and attempts to run the commands stored
- * within.
- * @filePath: Path to the file.
+ * processCmdFromFile - This is used to read and execute cmds from file.
+ * @filePath: This is used to pass the file from which the commands
+ * will be read.
  * @retLastExeCmd: Return value of the last executed command.
- *
- * Return: If file couldn't be opened - 127.
- *	   If malloc fails - -1.
- *	   Otherwise the return value of the last command ran.
+ * Return: if fail to open return 127.
+ * failure in malloc return -1
+ *Otherwise the return value of the last command ran.
  */
 int processCmdFromFile(char *filePath, int *retLastExeCmd)
 {

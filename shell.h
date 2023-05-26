@@ -49,7 +49,7 @@ typedef struct alias_s
 	struct alias_s *next;
 } alias_t;
 
-alias_t *aliases;
+extern alias_t *aliases;
 
 
 /* aliases.c */
@@ -92,7 +92,6 @@ char **_copyenv(void);
 void freeEnv(void);
 char **_getenv(const char *var);
 char *envValueHandler(char *beginning, int len);
-extern char **environ;
 
 /* errormessages.c */
 char *errorEnv(char **args);
@@ -124,7 +123,7 @@ void allocateLineptr(char **lineptr, size_t *lineptrSize, char *buffer, size_t b
 ssize_t _getline(char **lineptr, size_t *lineptrSize, FILE *file);
 
 /* lineHandler.c */
-void lineHandler(char **line, ssize_t read);
+void lineHandler(char **line, ssize_t lineLen);
 ssize_t grabNewLen(char *line);
 
 /* linkedlist.c */
@@ -168,7 +167,8 @@ char **_strtok(char *line, char *delim);
 void replaceVariable(char **args, int *retLastExeCmd);
 
 /* global variables */
-char *name;
-int hist;
+extern char *name;
+extern int hist;
+extern char **environ;
 
 #endif
