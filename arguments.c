@@ -10,21 +10,19 @@ char *getArgs(char *line, int *retLastExeCmd)
 {
 	size_t n = 0;
 	ssize_t read;
-	char *prompt = "sam@munaray> ";
-char *output = "You entered: ";
+	char *prompt = "$ ";
+
 	if (line)
 		free(line);
 
 	read = _getline(&line, &n, STDIN_FILENO);
-	write(STDOUT_FILENO, output, _strlen(output));
-	write(STDOUT_FILENO, line, _strlen(line));
 	if (read == -1)
 		return (NULL);
 	if (read == 1)
 	{
 		hist++;
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, prompt, _strlen(prompt));
+			write(STDOUT_FILENO, prompt, 2);
 		return (getArgs(line, retLastExeCmd));
 	}
 

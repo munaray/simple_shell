@@ -49,7 +49,7 @@ typedef struct alias_s
 	struct alias_s *next;
 } alias_t;
 
-extern alias_t *aliases;
+alias_t *aliases;
 
 
 /* aliases.c */
@@ -167,8 +167,8 @@ char **_strtok(char *line, char *delim);
 void replaceVariable(char **args, int *retLastExeCmd);
 
 /* global variables */
-extern char *name;
-extern int hist;
+char *name;
+int hist;
 extern char **environ;
 
 #endif

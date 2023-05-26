@@ -71,11 +71,13 @@ int exitShell(char **args, char **argStart)
 }
 
 /**
- * cdShell - This changes the current directory of the shell.
+ * cdShell - Changes the current directory of the shellby process.
  * @args: An array of arguments.
  * @argStart: A double pointer to the beginning of args.
  *
- * Return: on success return 0.
+ * Return: If the given string is not a directory - 2.
+ *         If an error occurs - -1.
+ *         Otherwise - 0.
  */
 int cdShell(char **args, char __attribute__((__unused__)) **argStart)
 {
@@ -150,11 +152,12 @@ int cdShell(char **args, char __attribute__((__unused__)) **argStart)
 }
 
 /**
- * helpShell - This displays information about the builtin cmds.
+ * helpShell - Displays information about shellby builtin cmds.
  * @args: An array of arguments.
  * @argStart: A pointer to the beginning of args.
  *
- * Return: on success return 0.
+ * Return: If an error occurs - -1.
+ *         Otherwise - 0.
  */
 int helpShell(char **args, char __attribute__((__unused__)) **argStart)
 {
